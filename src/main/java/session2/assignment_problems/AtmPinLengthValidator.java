@@ -1,18 +1,22 @@
-package session2.assignment_problems;
+import java.util.Scanner;
 
-/**
- * Assignment 1: ATM PIN Length Validator
- * Checks that a PIN is exactly 4 digits long. No loop needed.
- */
-public class AtmPinLengthValidator {
+public class ATM_PIN {
 
     static void checkPinLength(String pin) {
-        // TODO: use length(); if not 4, print "Invalid PIN — must be exactly 4 digits."
-        // otherwise print "PIN length OK."
+
+        if (pin.length() != 4) {
+            System.out.println("Invalid PIN - must be exactly 4 digits.");
+        } else {
+            System.out.println("PIN length OK.");
+        }
     }
 
     public static void main(String[] args) {
-        checkPinLength("482");
-        checkPinLength("4820");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter PIN: ");
+        String pin = sc.nextLine();
+
+        checkPinLength(pin);
     }
 }

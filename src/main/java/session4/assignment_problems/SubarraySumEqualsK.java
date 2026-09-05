@@ -1,20 +1,48 @@
-package session4.assignment_problems;
-
-/**
- * A4: Subarray Sum Equals K
- * Counts contiguous subarrays whose sum equals k, using prefix sums + a hash map.
- */
-public class SubarraySumEqualsK {
+import java.util.*;
+ 
+public class SubarraySumK {
 
     static int subarraySum(int[] nums, int k) {
-        // TODO: running prefix sum + HashMap<Integer, Integer> of prefixSum -> frequency
-        // at each position, count how many earlier prefix sums equal (currentSum - k)
-        // remember to seed the map with prefixSum 0 occurring once (empty prefix)
-        return 0;
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        map.put(0, 1);
+
+        int sum = 0;
+        int count = 0;
+
+        for (int num : nums) {
+
+            sum = sum + num;
+
+            if (map.containsKey(sum - k)) {
+                count = count + map.get(sum - k);
+            }
+
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+
+        return count;
     }
 
     public static void main(String[] args) {
-        System.out.println(subarraySum(new int[]{1, 1, 1}, 2));
-        System.out.println(subarraySum(new int[]{1, -1, 0}, 0));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter k: ");
+        int k = sc.nextInt();
+
+        System.out.println("Count: " + subarraySum(nums, k));
     }
 }

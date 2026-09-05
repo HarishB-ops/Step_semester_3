@@ -1,18 +1,25 @@
-package session2.class_problems;
+import java.util.Scanner;
 
-/**
- * Problem 2: CSV Student Record Parser
- * Parses "Name,RollNumber,Department" lines into a formatted record.
- */
-public class CsvStudentRecordParser {
+public class StudentRecordParser {
 
     static void parseStudentRecord(String csvLine) {
-        // TODO: split(",") into fields, validate exactly 3 fields present,
-        // print "Name: ... | Roll No: ... | Dept: ..." or "Invalid Record"
+        String[] data = csvLine.split(",");
+
+        if (data.length != 3) {
+            System.out.println("Invalid Record");
+        } else {
+            System.out.println("Name: " + data[0]
+                    + " | Roll No: " + data[1]
+                    + " | Dept: " + data[2]);
+        }
     }
 
     public static void main(String[] args) {
-        parseStudentRecord("Ananya Verma,RA2211003010123,CSE");
-        parseStudentRecord("Ananya Verma,CSE");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter student record: ");
+        String input = sc.nextLine();
+
+        parseStudentRecord(input);
     }
 }

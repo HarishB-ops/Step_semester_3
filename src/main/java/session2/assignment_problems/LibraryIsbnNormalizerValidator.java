@@ -1,29 +1,59 @@
-package session2.assignment_problems;
+import java.util.Scanner;
 
-/**
- * Assignment 4: Library ISBN Normalizer & Validator
- * Normalizes and validates a 13-char code: 3-letter publisher code + 4-digit year + 6-digit catalog number.
- */
-public class LibraryIsbnNormalizerValidator {
+public class ISBNValidator {
 
     static String normalizeCode(String raw) {
-        // TODO: trim() spaces, uppercase only the first 3 characters using substring() + concatenation
-        return "";
+
+        raw = raw.trim();
+
+        String first3 = raw.substring(0, 3).toUpperCase();
+        String rest = raw.substring(3);
+
+        return first3 + rest;
     }
 
     static String validateAndFormat(String code) {
-        // TODO: validate exactly 13 chars; first 3 are letters, remaining 10 are digits
-        // (Character.isLetter() / isDigit() in a loop - no regex)
-        // if valid: "[PUBCODE] YEAR: 20XX | CATALOG: 123456" using StringBuilder
-        // if invalid: print specific reason (wrong length / non-letter publisher code / non-digit body)
-        return "";
+
+        if (code.length() != 13) {
+            return "Invalid: wrong length";
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (!Character.isLetter(code.charAt(i))) {
+                return "Invalid: publisher code must be 3 letters";
+            }
+        }
+
+        for (int i = 3; i < 13; i++) {
+            if (!Character.isDigit(code.charAt(i))) {
+                return "Invalid: body must contain digits";
+            }
+        }
+
+        String publisher = code.substring(0, 3);
+        String year = code.substring(3, 7);
+        String catalog = code.substring(7);
+
+        StringBuilder result = new StringBuilder();
+
+        result.append("[");
+        result.append(publisher);
+        result.append("] YEAR: ");
+        result.append(year);
+        result.append(" | CATALOG: ");
+        result.append(catalog);
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        String code1 = normalizeCode(" pen2026004251 ");
-        System.out.println(validateAndFormat(code1));
+        Scanner sc = new Scanner(System.in);
 
-        String code2 = normalizeCode("12N2026004251");
-        System.out.println(validateAndFormat(code2));
+        System.out.print("Enter ISBN code: ");
+        String raw = sc.nextLine();
+
+        String code = normalizeCode(raw);
+
+        System.out.println(validateAndFormat(code));
     }
 }

@@ -1,63 +1,99 @@
-package session5.class_problems;
-
 import java.util.Arrays;
 
-/**
- * Problem 5: Fantasy League Auto-Draft Ranking Engine
- * Two overloaded draftability checks, plus Comparable-based ranking via Arrays.sort.
- */
+class Player implements Comparable<Player> {
+
+    String name;
+    int matchesPlayed;
+    double battingAverage;
+    boolean injured;
+
+    public Player(
+        String name,
+        int matchesPlayed,
+        double battingAverage,
+        boolean injured
+    ) {
+        this.name = name;
+        this.matchesPlayed = matchesPlayed;
+        this.battingAverage = battingAverage;
+        this.injured = injured;
+    }
+
+    static boolean isDraftable(int matchesPlayed) {
+        return matchesPlayed >= 10;
+    }
+
+    static boolean isDraftable(
+        int matchesPlayed,
+        boolean injured
+    ) {
+        return matchesPlayed >= 5 && !injured;
+    }
+
+    public int compareTo(Player other) {
+        return Double.compare(
+            other.battingAverage,
+            this.battingAverage
+        );
+    }
+}
+
 public class FantasyLeagueAutoDraftRankingEngine {
 
-    static class Player implements Comparable<Player> {
-        String name;
-        int matchesPlayed;
-        double battingAverage;
-        boolean injured;
-
-        public Player(String name, int matchesPlayed, double battingAverage, boolean injured) {
-            this.name = name;
-            this.matchesPlayed = matchesPlayed;
-            this.battingAverage = battingAverage;
-            this.injured = injured;
-        }
-
-        @Override
-        public int compareTo(Player other) {
-            // TODO: rank by fantasy points descending (define how fantasy points are derived)
-            return 0;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
-
-    /** Experience-only rule for established players. */
-    static boolean isDraftable(int matchesPlayed) {
-        // TODO: e.g. matchesPlayed >= 10 qualifies regardless of fitness
-        return false;
-    }
-
-    /** Combined matches-and-fitness rule for everyone else. */
-    static boolean isDraftable(int matchesPlayed, boolean injured) {
-        // TODO: decide thresholds - reasonably experienced AND currently fit
-        return false;
-    }
-
     static String draftAndRank(Player[] players) {
-        // TODO: filter using the overloaded isDraftable(...) checks, then Arrays.sort(draftableArray)
-        // (compareTo handles the ranking), build "1. Name | 2. Name | ..." string
-        return "";
+
+        Player[] draftable =
+            new Player[players.length];
+
+        int count = 0;
+
+        for (Player player : players) {
+
+            if (Player.isDraftable(player.matchesPlayed) ||
+                Player.isDraftable(
+                    player.matchesPlayed,
+                    player.injured
+                )) {
+
+                draftable[count] = player;
+                count++;
+            }
+        }
+
+        draftable =
+            Arrays.copyOf(draftable, count);
+
+        Arrays.sort(draftable);
+
+        String result = "";
+
+        for (int i = 0; i < draftable.length; i++) {
+
+            result += (i + 1)
+                    + ". "
+                    + draftable[i].name;
+
+            if (i < draftable.length - 1) {
+                result += " | ";
+            }
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
+
         Player[] players = {
-                new Player("Virat", 15, 48.0, false),
-                new Player("Rahul", 7, 55.0, false),
-                new Player("Sameer", 3, 60.0, false),
-                new Player("Dev", 12, 20.0, true)
+
+            new Player("Virat", 15, 48.0, false),
+            new Player("Rahul", 7, 55.0, false),
+            new Player("Sameer", 3, 60.0, false),
+            new Player("Dev", 12, 20.0, true)
+
         };
-        System.out.println(draftAndRank(players));
+
+        System.out.println(
+            draftAndRank(players)
+        );
     }
 }

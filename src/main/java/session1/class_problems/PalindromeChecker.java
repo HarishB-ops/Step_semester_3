@@ -1,41 +1,81 @@
-package session1.class_problems;
+import java.util.*;
 
-/**
- * Problem 2: Palindrome Checker (3 Approaches)
- * Verifies a palindrome using iterative, recursive, and array-reversal
- * methods, and confirms all three agree.
- */
 public class PalindromeChecker {
 
     static boolean isPalindromeIterative(String text) {
-        // TODO: compare characters from both ends moving inward
-        return false;
+
+        int left = 0;
+        int right = text.length() - 1;
+
+        while (left < right) {
+
+            if (text.charAt(left) != text.charAt(right))
+                return false;
+
+            left++;
+            right--;
+        }
+
+        return true;
     }
 
     static boolean isPalindromeRecursive(String text) {
-        // TODO: recursively compare first and last chars, shrinking the substring
-        return false;
+
+        if (text.length() <= 1)
+            return true;
+
+        if (text.charAt(0) != text.charAt(text.length() - 1))
+            return false;
+
+        return isPalindromeRecursive(
+            text.substring(1, text.length() - 1)
+        );
     }
 
     static boolean isPalindromeArrayReversal(String text) {
-        // TODO: convert to char[], reverse it, compare to original
-        return false;
+
+        char[] arr = text.toCharArray();
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+
+            char temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+
+            left++;
+            right--;
+        }
+
+        String reversed = new String(arr);
+
+        return text.equals(reversed);
     }
 
     public static void main(String[] args) {
-        String[] samples = {"madam", "hello"};
-        for (String text : samples) {
-            boolean iterative = isPalindromeIterative(text);
-            boolean recursive = isPalindromeRecursive(text);
-            boolean arrayReversal = isPalindromeArrayReversal(text);
 
-            System.out.println("\"" + text + "\" -> Iterative: " + result(iterative)
-                    + " | Recursive: " + result(recursive)
-                    + " | Array Reversal: " + result(arrayReversal));
-        }
-    }
+        Scanner sc = new Scanner(System.in);
 
-    private static String result(boolean isPalindrome) {
-        return isPalindrome ? "Palindrome" : "Not Palindrome";
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+
+        System.out.println(
+            "Iterative: " +
+            (isPalindromeIterative(text) ? "Palindrome" : "Not Palindrome")
+        );
+
+        System.out.println(
+            "Recursive: " +
+            (isPalindromeRecursive(text) ? "Palindrome" : "Not Palindrome")
+        );
+
+        System.out.println(
+            "Array Reversal: " +
+            (isPalindromeArrayReversal(text) ? "Palindrome" : "Not Palindrome")
+        );
+
+        sc.close();
     }
 }

@@ -1,20 +1,31 @@
-package session2.class_problems;
+import java.util.Scanner;
 
-/**
- * Problem 3: File Extension Validator
- * Checks whether a filename has an accepted extension (pdf, docx, zip).
- */
 public class FileExtensionValidator {
 
     static String validateFileExtension(String filename) {
-        // TODO: find last '.' using lastIndexOf('.'), extract extension with substring()
-        // compare case-insensitively against pdf, docx, zip
-        // return "Accepted" or "Rejected — invalid file type"
-        return "";
+        int dot = filename.lastIndexOf('.');
+
+        if (dot == -1) {
+            return "Rejected - invalid file type";
+        }
+
+        String extension = filename.substring(dot + 1);
+
+        if (extension.equalsIgnoreCase("pdf") ||
+            extension.equalsIgnoreCase("docx") ||
+            extension.equalsIgnoreCase("zip")) {
+            return "Accepted";
+        }
+
+        return "Rejected - invalid file type";
     }
 
     public static void main(String[] args) {
-        System.out.println(validateFileExtension("Assignment1.PDF"));
-        System.out.println(validateFileExtension("notes.txt"));
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter filename: ");
+        String filename = sc.nextLine();
+
+        System.out.println(validateFileExtension(filename));
     }
 }

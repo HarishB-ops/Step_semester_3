@@ -1,22 +1,49 @@
-package session1.assignment_problems;
+import java.util.*;
 
-/**
- * Assignment 1: The Exam Hall Seat Duplication Checker
- * Flags duplicate seat numbers using arrays and nested loops only (no Collections).
- */
-public class ExamHallSeatDuplicationChecker {
+public class SeatDuplicationChecker {
 
     static void checkDuplicateSeats(int[] seatNumbers) {
-        boolean foundDuplicate = false;
-        // TODO: compare every seat number against every other seat number
-        // print "Duplicate Seat Number Found: X" for each duplicate found
-        if (!foundDuplicate) {
+
+        boolean found = false;
+
+        for (int i = 0; i < seatNumbers.length; i++) {
+
+            for (int j = i + 1; j < seatNumbers.length; j++) {
+
+                if (seatNumbers[i] == seatNumbers[j]) {
+
+                    System.out.println(
+                        "Duplicate Seat Number Found: " + seatNumbers[i]
+                    );
+
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
             System.out.println("No Duplicate Seats Found");
         }
     }
 
     public static void main(String[] args) {
-        checkDuplicateSeats(new int[]{101, 102, 103, 102, 105});
-        checkDuplicateSeats(new int[]{101, 102, 103, 104, 105});
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+
+        int[] seats = new int[n];
+
+        for (int i = 0; i < n; i++) {
+
+            System.out.print("Enter seat number: ");
+            seats[i] = sc.nextInt();
+        }
+
+        checkDuplicateSeats(seats);
+
+        sc.close();
     }
 }

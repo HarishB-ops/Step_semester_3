@@ -1,19 +1,27 @@
-package session5.assignment_problems;
-
-/**
- * Assignment 2: Duplicate Team Name Finder
- * Finds the first repeated team name using nested loops.
- */
 public class DuplicateTeamNameFinder {
 
     static String findDuplicateTeam(String[] teamNames) {
-        // TODO: compare each name only against names that come after it
-        // return "Duplicate Found: <name>" for the first duplicate, or "No Duplicates Found"
-        return "";
+
+        for (int i = 0; i < teamNames.length; i++) {
+            for (int j = i + 1; j < teamNames.length; j++) {
+
+                if (teamNames[i].equals(teamNames[j])) {
+                    return "Duplicate Found: " + teamNames[i];
+                }
+            }
+        }
+
+        return "No Duplicates Found";
     }
 
     public static void main(String[] args) {
-        System.out.println(findDuplicateTeam(new String[]{"ByteForce", "CodeCrafters", "ByteForce"}));
-        System.out.println(findDuplicateTeam(new String[]{"ByteForce", "CodeCrafters", "NullPointers"}));
+
+        String[] teamNames = {
+            "ByteForce",
+            "CodeCrafters",
+            "ByteForce"
+        };
+
+        System.out.println(findDuplicateTeam(teamNames));
     }
 }

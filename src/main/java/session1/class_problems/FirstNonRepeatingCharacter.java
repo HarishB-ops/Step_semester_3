@@ -1,26 +1,41 @@
-package session1.class_problems;
+import java.util.*;
 
-/**
- * Problem 4: First Non-Repeating Character
- * Finds the first character in a string whose frequency is exactly 1.
- */
-public class FirstNonRepeatingCharacter {
+public class FirstNonRepeating {
 
     static char findFirstNonRepeatingChar(String text) {
-        // TODO: count frequency of every char, then scan left to right
-        // return the first one with frequency == 1, or a sentinel if none found
+
+        int[] frequency = new int[256];
+
+        for (int i = 0; i < text.length(); i++) {
+            frequency[text.charAt(i)]++;
+        }
+
+        for (int i = 0; i < text.length(); i++) {
+
+            if (frequency[text.charAt(i)] == 1) {
+                return text.charAt(i);
+            }
+        }
+
         return '\0';
     }
 
     public static void main(String[] args) {
-        String[] samples = {"swiss", "aabbcc"};
-        for (String text : samples) {
-            char result = findFirstNonRepeatingChar(text);
-            if (result == '\0') {
-                System.out.println("\"" + text + "\" -> No Non-Repeating Character Found");
-            } else {
-                System.out.println("\"" + text + "\" -> First Non-Repeating Character: '" + result + "'");
-            }
-        }
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+
+        char result = findFirstNonRepeatingChar(text);
+
+        if (result == '\0')
+            System.out.println("No Non-Repeating Character Found");
+        else
+            System.out.println(
+                "First Non-Repeating Character: '" + result + "'"
+            );
+
+        sc.close();
     }
 }

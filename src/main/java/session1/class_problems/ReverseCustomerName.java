@@ -1,20 +1,30 @@
-package session1.class_problems;
+import java.util.*;
 
-/**
- * Problem 5: Reverse Customer Name
- * Returns the reverse of a given customer name without modifying the original.
- */
 public class ReverseCustomerName {
 
     static String reverseCustomerName(String customerName) {
-        // TODO: return customerName reversed
-        return "";
+
+        String reversed = "";
+
+        for (int i = customerName.length() - 1; i >= 0; i--) {
+            reversed += customerName.charAt(i);
+        }
+
+        return reversed;
     }
 
     public static void main(String[] args) {
-        String customerName = "Sunil";
-        String reversed = reverseCustomerName(customerName);
-        System.out.println("Original Name: " + customerName);
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter customer name: ");
+        String name = sc.nextLine();
+
+        String reversed = reverseCustomerName(name);
+
+        System.out.println("Original Name: " + name);
         System.out.println("Reversed Name: " + reversed);
+
+        sc.close();
     }
 }

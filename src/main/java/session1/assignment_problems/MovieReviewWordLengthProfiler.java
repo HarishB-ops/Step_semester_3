@@ -1,17 +1,47 @@
-package session1.assignment_problems;
+import java.util.*;
 
-/**
- * Assignment 5: The Movie Review Word Length Profiler
- * Classifies words in a review as Short (1-4), Medium (5-8), or Long (9+) letters.
- */
-public class MovieReviewWordLengthProfiler {
+public class WordLengthProfiler {
 
     static void classifyWordLengths(String review) {
-        // TODO: split review into words, classify each by length,
-        // count Short/Medium/Long and print the totals
+
+        String[] words = review.split("\\s+");
+
+        int shortWords = 0;
+        int mediumWords = 0;
+        int longWords = 0;
+
+        for (String word : words) {
+
+            int length = word.length();
+
+            if (length >= 1 && length <= 4) {
+
+                shortWords++;
+
+            } else if (length <= 8) {
+
+                mediumWords++;
+
+            } else {
+
+                longWords++;
+            }
+        }
+
+        System.out.println("Short: " + shortWords);
+        System.out.println("Medium: " + mediumWords);
+        System.out.println("Long: " + longWords);
     }
 
     public static void main(String[] args) {
-        classifyWordLengths("This movie was absolutely fantastic and thrilling");
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter movie review: ");
+        String review = sc.nextLine();
+
+        classifyWordLengths(review);
+
+        sc.close();
     }
 }

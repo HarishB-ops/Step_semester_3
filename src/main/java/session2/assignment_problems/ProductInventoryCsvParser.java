@@ -1,18 +1,26 @@
-package session2.assignment_problems;
+import java.util.Scanner;
 
-/**
- * Assignment 3: Product Inventory CSV Parser
- * Parses "ProductName,SKU,Quantity" lines into a formatted record.
- */
-public class ProductInventoryCsvParser {
+public class InventoryParser {
 
     static void parseInventoryRecord(String csvLine) {
-        // TODO: split(",") into fields, validate exactly 3 fields present,
-        // print "Product: ... | SKU: ... | Qty: ..." or "Invalid Record"
+
+        String[] data = csvLine.split(",");
+
+        if (data.length != 3) {
+            System.out.println("Invalid Record");
+        } else {
+            System.out.println("Product: " + data[0]
+                    + " | SKU: " + data[1]
+                    + " | Qty: " + data[2]);
+        }
     }
 
     public static void main(String[] args) {
-        parseInventoryRecord("Wireless Mouse,WM-2201,150");
-        parseInventoryRecord("Wireless Mouse,150");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter inventory record: ");
+        String input = sc.nextLine();
+
+        parseInventoryRecord(input);
     }
 }

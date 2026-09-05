@@ -1,42 +1,61 @@
-package session1.class_problems;
+import java.util.*;
 
-import java.util.Random;
+public class RockPaperScissors {
 
-/**
- * Problem 1: Rock-Paper-Scissors Game
- * Plays N rounds between player and computer, prints a summary table
- * of Wins/Losses/Draws and the player's win percentage.
- */
-public class RockPaperScissorsGame {
-
-    /**
-     * Determines the winner of one round.
-     * @return "Player Wins", "Computer Wins", or "Draw"
-     */
     static String playRound(String playerMove, String computerMove) {
-        // TODO: implement Rock-Paper-Scissors rules
-        return "";
+
+        if (playerMove.equals(computerMove))
+            return "Draw";
+
+        if ((playerMove.equals("Rock") && computerMove.equals("Scissors")) ||
+            (playerMove.equals("Paper") && computerMove.equals("Rock")) ||
+            (playerMove.equals("Scissors") && computerMove.equals("Paper"))) {
+            return "Player Wins";
+        }
+
+        return "Computer Wins";
     }
 
     public static void main(String[] args) {
-        String[] moves = {"Rock", "Paper", "Scissors"};
+
+        Scanner sc = new Scanner(System.in);
         Random random = new Random();
-        int rounds = 5;
+
+        String[] moves = {"Rock", "Paper", "Scissors"};
 
         int wins = 0, losses = 0, draws = 0;
 
-        System.out.println("Round | Player Move | Computer Move | Result");
-        for (int i = 1; i <= rounds; i++) {
-            String playerMove = moves[random.nextInt(3)]; // TODO: replace with real/demo input
-            String computerMove = moves[random.nextInt(3)];
-            String result = playRound(playerMove, computerMove);
+        System.out.println("Rock-Paper-Scissors Game");
 
-            // TODO: tally wins/losses/draws based on result
-            System.out.println(i + " | " + playerMove + " | " + computerMove + " | " + result);
+        for (int i = 1; i <= 5; i++) {
+
+            System.out.print("Round " + i + " - Enter Rock, Paper or Scissors: ");
+            String player = sc.next();
+
+            String computer = moves[random.nextInt(3)];
+
+            String result = playRound(player, computer);
+
+            System.out.println("Player: " + player);
+            System.out.println("Computer: " + computer);
+            System.out.println("Result: " + result);
+
+            if (result.equals("Player Wins"))
+                wins++;
+            else if (result.equals("Computer Wins"))
+                losses++;
+            else
+                draws++;
         }
 
-        double winPercent = rounds == 0 ? 0 : (wins * 100.0) / rounds;
-        System.out.println("Wins: " + wins + " | Losses: " + losses + " | Draws: " + draws
-                + " | Win % = " + winPercent);
+        double percentage = (wins / 5.0) * 100;
+
+        System.out.println("\nFinal Summary");
+        System.out.println("Wins: " + wins);
+        System.out.println("Losses: " + losses);
+        System.out.println("Draws: " + draws);
+        System.out.println("Win Percentage: " + percentage + "%");
+
+        sc.close();
     }
 }

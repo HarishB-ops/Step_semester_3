@@ -1,21 +1,49 @@
-package session4.assignment_problems;
-
+import java.util.Scanner;
 import java.util.Arrays;
 
-/**
- * A1: Product of Array Except Self
- * For each index, computes the product of all other elements, no division, O(n).
- */
-public class ProductOfArrayExceptSelf {
+public class ProductExceptSelf {
 
     static int[] productExceptSelf(int[] nums) {
-        // TODO: forward pass - answer[i] = running product of everything to the left of i
-        // backward pass - multiply in running product of everything to the right of i
-        return new int[0];
+
+        int n = nums.length;
+        int[] result = new int[n];
+
+        int product = 1;
+
+        // Left products
+        for (int i = 0; i < n; i++) {
+            result[i] = product;
+            product = product * nums[i];
+        }
+
+        product = 1;
+
+        // Right products
+        for (int i = n - 1; i >= 0; i--) {
+            result[i] = result[i] * product;
+            product = product * nums[i];
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(productExceptSelf(new int[]{1, 2, 3, 4})));
-        System.out.println(Arrays.toString(productExceptSelf(new int[]{-1, 1, 0, -3, 3})));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        int[] result = productExceptSelf(nums);
+
+        System.out.println(Arrays.toString(result));
     }
 }

@@ -1,22 +1,54 @@
-package session2.assignment_problems;
+import java.util.*;
 
-/**
- * Assignment 5: Stop-Word-Filtered Word Frequency Report
- * Counts word frequency in feedback text, excluding common filler/stop words.
- */
-public class StopWordFilteredWordFrequencyReport {
-
-    private static final String[] STOP_WORDS = {"the", "was", "and", "a", "is", "of", "in"};
+public class WordFrequency {
 
     static void printFilteredWordFrequency(String feedback) {
-        // TODO: lowercase the text, strip punctuation (periods/commas) using replace()
-        // split on whitespace using split("\\s+")
-        // skip any word in STOP_WORDS
-        // count frequency of each remaining unique word (a HashMap is fine)
-        // print each word with its count, sorted by count descending
+
+        feedback = feedback.toLowerCase();
+        feedback = feedback.replace(".", "");
+        feedback = feedback.replace(",", "");
+
+        String[] words = feedback.split("\\s+");
+
+        String[] stopWords = {
+            "the", "was", "and", "a", "is", "of", "in"
+        };
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for (String word : words) {
+
+            boolean stop = false;
+
+            for (String stopWord : stopWords) {
+                if (word.equals(stopWord)) {
+                    stop = true;
+                    break;
+                }
+            }
+
+            if (!stop) {
+                map.put(word, map.getOrDefault(word, 0) + 1);
+            }
+        }
+
+        ArrayList<Map.Entry<String, Integer>> list =
+                new ArrayList<>(map.entrySet());
+
+        list.sort((a, b) -> b.getValue() - a.getValue());
+
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     public static void main(String[] args) {
-        printFilteredWordFrequency("The mentor was great, the session was great and clear.");
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter feedback: ");
+        String feedback = sc.nextLine();
+
+        printFilteredWordFrequency(feedback);
     }
 }

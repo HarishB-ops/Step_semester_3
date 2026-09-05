@@ -1,19 +1,43 @@
-package session4.class_problems;
+import java.util.Scanner;
 
-/**
- * L2: Best Time to Buy and Sell Stock
- * Finds the max profit from one buy + one later sell, in a single pass.
- */
-public class BestTimeToBuySellStock {
+public class BestStock {
 
     static int maxProfit(int[] prices) {
-        // TODO: track lowest price seen so far, track largest profit seen so far
-        // return 0 if prices only ever fall
-        return 0;
+
+        int minPrice = prices[0];
+        int maxProfit = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+
+            int profit = prices[i] - minPrice;
+
+            if (profit > maxProfit) {
+                maxProfit = profit;
+            }
+        }
+
+        return maxProfit;
     }
 
     public static void main(String[] args) {
-        System.out.println(maxProfit(new int[]{7, 1, 5, 3, 6, 4}));
-        System.out.println(maxProfit(new int[]{7, 6, 4, 3, 1}));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] prices = new int[n];
+
+        System.out.println("Enter prices:");
+
+        for (int i = 0; i < n; i++) {
+            prices[i] = sc.nextInt();
+        }
+
+        System.out.println("Maximum Profit: " + maxProfit(prices));
     }
 }

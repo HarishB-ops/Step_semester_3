@@ -1,19 +1,38 @@
-package session4.assignment_problems;
+import java.util.Scanner;
 
-/**
- * A2: Maximum Subarray
- * Finds the largest sum of a contiguous subarray using Kadane's algorithm.
- */
 public class MaximumSubarray {
 
     static int maxSubArray(int[] nums) {
-        // TODO: Kadane's algorithm - at each element, decide whether to extend
-        // the current running subarray or start fresh from this element
-        return 0;
+
+        int currentSum = nums[0];
+        int maxSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+
+            currentSum = Math.max(nums[i],
+                                  currentSum + nums[i]);
+
+            maxSum = Math.max(maxSum, currentSum);
+        }
+
+        return maxSum;
     }
 
     public static void main(String[] args) {
-        System.out.println(maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
-        System.out.println(maxSubArray(new int[]{-3, -1, -2}));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.println("Maximum Sum: " + maxSubArray(nums));
     }
 }

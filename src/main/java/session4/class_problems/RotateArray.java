@@ -1,21 +1,43 @@
-package session4.class_problems;
-
+import java.util.Scanner;
 import java.util.Arrays;
 
-/**
- * L5: Rotate Array
- * Rotates an array to the right by k positions.
- */
 public class RotateArray {
 
     static int[] rotateArray(int[] nums, int k) {
-        // TODO: reduce k with k = k % nums.length
-        // create new array; for each i, newArray[(i + k) % nums.length] = nums[i]
-        return new int[0];
+
+        int n = nums.length;
+
+        k = k % n;
+
+        int[] result = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            result[(i + k) % n] = nums[i];
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(rotateArray(new int[]{1, 2, 3, 4, 5, 6, 7}, 3)));
-        System.out.println(Arrays.toString(rotateArray(new int[]{1, 2}, 3)));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter k: ");
+        int k = sc.nextInt();
+
+        int[] result = rotateArray(nums, k);
+
+        System.out.println(Arrays.toString(result));
     }
 }

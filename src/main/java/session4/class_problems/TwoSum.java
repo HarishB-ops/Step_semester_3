@@ -1,21 +1,43 @@
-package session4.class_problems;
-
+import java.util.Scanner;
 import java.util.Arrays;
 
-/**
- * L1: Two Sum
- * Finds two indices whose values sum to target, using nested loops.
- */
 public class TwoSum {
 
     static int[] twoSum(int[] nums, int target) {
-        // TODO: nested loops, check every pair (i, j), i != j
-        // if nums[i] + nums[j] == target, return new int[]{i, j}
-        return new int[0];
+
+        for (int i = 0; i < nums.length; i++) {
+
+            for (int j = i + 1; j < nums.length; j++) {
+
+                if (nums[i] + nums[j] == target) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
+        return new int[]{-1, -1};
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 9)));
-        System.out.println(Arrays.toString(twoSum(new int[]{3, 2, 4}, 6)));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter target: ");
+        int target = sc.nextInt();
+
+        int[] result = twoSum(nums, target);
+
+        System.out.println(Arrays.toString(result));
     }
 }

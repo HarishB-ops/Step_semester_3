@@ -1,19 +1,37 @@
-package session4.class_problems;
+import java.util.Scanner;
 
-/**
- * L3: Contains Duplicate
- * Checks whether any value appears more than once, using nested loops.
- */
 public class ContainsDuplicate {
 
     static boolean containsDuplicate(int[] nums) {
-        // TODO: nested loops comparing every i against every j != i
-        // return true immediately on a match, false if none found
+
+        for (int i = 0; i < nums.length; i++) {
+
+            for (int j = i + 1; j < nums.length; j++) {
+
+                if (nums[i] == nums[j]) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
     public static void main(String[] args) {
-        System.out.println(containsDuplicate(new int[]{1, 2, 3, 1}));
-        System.out.println(containsDuplicate(new int[]{1, 2, 3, 4}));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+
+        int[] nums = new int[n];
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.println(containsDuplicate(nums));
     }
 }

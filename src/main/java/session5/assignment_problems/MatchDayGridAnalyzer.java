@@ -1,30 +1,53 @@
-package session5.class_problems;
-
-/**
- * Problem 4: Match Day Grid Analyzer
- * Classifies each match row as "Power Surge" or "Normal" based on its average.
- */
 public class MatchDayGridAnalyzer {
 
-    /** Computes the average of one row. Reused once per match - no inline recomputation. */
-    private static double rowAverage(int[] row) {
-        // TODO: sum all values in row, divide by row.length
-        return 0;
+    static double rowAverage(int[] row) {
+
+        int sum = 0;
+
+        for (int value : row) {
+            sum += value;
+        }
+
+        return (double) sum / row.length;
     }
 
-    static String classifyMatches(int[][] runsPerOver, int threshold) {
-        // TODO: for each row, call rowAverage(row) once, compare to threshold
-        // >= threshold -> "Power Surge", below -> "Normal"
-        // build result like "Match 0: Normal | Match 1: Power Surge | Match 2: Normal"
-        return "";
+    static String classifyMatches(
+        int[][] runsPerOver,
+        int threshold
+    ) {
+
+        String result = "";
+
+        for (int i = 0; i < runsPerOver.length; i++) {
+
+            double average = rowAverage(runsPerOver[i]);
+
+            if (average >= threshold) {
+                result += "Match " + i + ": Power Surge";
+            } else {
+                result += "Match " + i + ": Normal";
+            }
+
+            if (i < runsPerOver.length - 1) {
+                result += " | ";
+            }
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
+
         int[][] runsPerOver = {
-                {4, 6, 8},
-                {10, 12, 14},
-                {2, 3, 1}
+            {4, 6, 8},
+            {10, 12, 14},
+            {2, 3, 1}
         };
-        System.out.println(classifyMatches(runsPerOver, 8));
+
+        int threshold = 8;
+
+        System.out.println(
+            classifyMatches(runsPerOver, threshold)
+        );
     }
 }

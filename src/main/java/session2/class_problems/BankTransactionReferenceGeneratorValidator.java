@@ -1,29 +1,67 @@
-package session2.class_problems;
+import java.util.Scanner;
 
-/**
- * Problem 5: Bank Transaction Reference Generator & Validator
- * Normalizes and validates a 14-char reference: 3-letter bank code + 6-digit date (ddMMyy) + 5-digit sequence.
- */
-public class BankTransactionReferenceGeneratorValidator {
+public class BankReferenceValidator {
 
     static String normalizeReference(String raw) {
-        // TODO: trim() spaces, uppercase only the first 3 characters using substring() + concatenation
-        return "";
+        raw = raw.trim();
+
+        if (raw.length() < 3) {
+            return raw.toUpperCase();
+        }
+
+        String bank = raw.substring(0, 3).toUpperCase();
+        String rest = raw.substring(3);
+
+        return bank + rest;
     }
 
     static String validateAndFormat(String reference) {
-        // TODO: validate exactly 14 chars; first 3 are letters (Character.isLetter());
-        // remaining 11 are digits (Character.isDigit()) in a loop - no regex
-        // if valid: "[BANKCODE] DATE: dd/MM/yy | SEQ: 12345" using StringBuilder
-        // if invalid: print specific reason (wrong length / non-letter bank code / non-digit body)
-        return "";
+
+        if (reference.length() != 14) {
+            return "Invalid: wrong length";
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (!Character.isLetter(reference.charAt(i))) {
+                return "Invalid: bank code must be 3 letters";
+            }
+        }
+
+        for (int i = 3; i < 14; i++) {
+            if (!Character.isDigit(reference.charAt(i))) {
+                return "Invalid: body must contain digits";
+            }
+        }
+
+        String bank = reference.substring(0, 3);
+        String date = reference.substring(3, 9);
+        String sequence = reference.substring(9);
+
+        String formattedDate =
+                date.substring(0, 2) + "/" +
+                date.substring(2, 4) + "/" +
+                date.substring(4, 6);
+
+        StringBuilder result = new StringBuilder();
+
+        result.append("[");
+        result.append(bank);
+        result.append("] DATE: ");
+        result.append(formattedDate);
+        result.append(" | SEQ: ");
+        result.append(sequence);
+
+        return result.toString();
     }
 
     public static void main(String[] args) {
-        String ref1 = normalizeReference(" hdf03022600042 ");
-        System.out.println(validateAndFormat(ref1));
+        Scanner sc = new Scanner(System.in);
 
-        String ref2 = normalizeReference("12F03022600042");
-        System.out.println(validateAndFormat(ref2));
+        System.out.print("Enter reference: ");
+        String raw = sc.nextLine();
+
+        String reference = normalizeReference(raw);
+
+        System.out.println(validateAndFormat(reference));
     }
 }
